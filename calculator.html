@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Futuristic Calculator</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.7/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .btn:hover {
+            filter: brightness(110%);
+        }
+
+        .btn:active {
+            filter: brightness(90%);
+        }
+
+        .btn-clicked {
+            animation: buttonClick 0.2s linear;
+        }
+
+        @keyframes buttonClick {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(0.9);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-gray-900 text-white text-center">
+    <div class="container mx-auto p-4">
+        <h1 class="text-4xl font-bold mb-4">Futuristic Calculator</h1>
+        <div class="grid grid-cols-4 gap-4">
+            <input id="display" type="text" class="col-span-4 p-4 text-3xl bg-gray-800 rounded-lg text-right">
+            <button class="btn col-span-3 bg-gray-800 border border-white rounded-lg p-4 text-2xl"
+                onclick="clearDisplay()">AC</button>
+            <button class="btn bg-gray-800 border border-white rounded-lg p-4 text-2xl"
+                onclick="deleteLast()">&#9003;</button>
+            <button class="btn bg-gray-800 border border-white rounded-lg p-4 text-2xl"
+                onclick="appendValue('/')">/</button>
+            <button class="btn bg-gray-800 border border-white rounded-lg p-4 text-2xl"
+                onclick="appendValue('7')">7</button>
+            <button class="btn bg-gray-800 border border-white rounded-lg p-4 text-2xl"
+                onclick="appendValue('8')">8</button>
+            <button class="btn bg-gray-800 border border-white rounded-lg p-4 text-2xl"
+                onclick="appendValue('9')">9</button>
+            <button class="btn bg-gray-800 border border-white rounded-lg p-4 text-2xl"
+                onclick="appendValue('*')">*</button>
+            <button class="btn bg-gray-800 border border-white rounded-lg p-4 text-2xl"
+                onclick="appendValue('4')">4</button>
+            <button class="btn bg-gray-800 border border-white rounded-lg p-4 text-2xl"
+                onclick="appendValue('5')">5</button>
+            <button class="btn bg-gray-800 border border-white rounded-lg p-4 text-2xl"
+                onclick="appendValue('6')">6</button>
+            <button class="btn bg-gray-800 border border-white rounded-lg p-4 text-2xl"
+                onclick="appendValue('-')">-</button>
+            <button class="btn bg-gray-800 border border-white rounded-lg p-4 text-2xl"
+                onclick="appendValue('1')">1</button>
+            <button class="btn bg-gray-800 border border-white rounded-lg p-4 text-2xl"
+                onclick="appendValue('2')">2</button>
+            <button class="btn bg-gray-800 border border-white rounded-lg p-4 text-2xl"
+                onclick="appendValue('3')">3</button>
+            <button class="btn bg-gray-800 border border-white rounded-lg p-4 text-2xl"
+                onclick="appendValue('+')">+</button>
+            <button class="btn bg-gray-800 border border-white rounded-lg p-4 text-2xl"
+                onclick="appendValue('0')">0</button>
+            <button class="btn bg-gray-800 border border-white rounded-lg p-4 text-2xl"
+                onclick="appendValue('.')">.</button>
+            <button class="btn bg-green-500 border border-white rounded-lg p-4 text-2xl"
+                onclick="calculate()">=</button>
+        </div>
+    </div>
+
+    <script>
+        function clearDisplay() {
+            document.getElementById('display').value = '';
+        }
+
+        function deleteLast() {
+            var displayValue = document.getElementById('display').value;
+            document.getElementById('display').value = displayValue.slice(0, -1);
+        }
+
+        function appendValue(value) {
+            document.getElementById('display').value += value;
+            animateButtonClick();
+        }
+
+        function animateButtonClick() {
+            var buttons = document.getElementsByClassName('btn');
+            for (var i = 0; i < buttons.length; i++) {
+                buttons[i].classList.add('btn-clicked');
+                setTimeout(function (index) {
+                    buttons[index].classList.remove('btn-clicked');
+                }, 200, i);
+            }
+        }
+
+        function calculate() {
+            var displayValue = document.getElementById('display').value;
+
+            // Check for custom outputs
+            if (displayValue === '1+') {
+                document.getElementById('display').value = 'Never Settle';
+                return;
+            } else if (displayValue === '69') {
+                playMoaningSound();
+                return;
+            }
+
+            try {
+                var result = eval(displayValue);
+                document.getElementById('display').value = result;
+            } catch (error) {
+                document.getElementById('display').value = 'Error';
+            }
+        }
+
+        function playMoaningSound() {
+            var audio = new Audio('moaning_sound.mp3');
+            audio.play();
+        }
+    </script>
+</body>
+
+</html>
